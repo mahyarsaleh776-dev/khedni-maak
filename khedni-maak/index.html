@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="خدني معك — منصة سورية تجريبية لمشاركة الرحلات وعرض معلومات مفيدة مثل الطقس.">
+  <title>خدني معك | معلوماتك... بيدك</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* إضافات بسيطة لقسم الطقس والنتائج الديناميكية */
+    .weather-section {
+      padding: 90px 0;
+      background: #ffffff;
+    }
+
+    .weather-box {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .weather-card,
+    .weather-info {
+      border-radius: 24px;
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .weather-card {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .weather-city {
+      color: var(--orange);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .weather-temp {
+      font-size: 54px;
+      line-height: 1.1;
+      font-weight: 800;
+      margin: 15px 0;
+    }
+
+    .weather-condition {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .weather-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .weather-detail {
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .weather-detail small {
+      display: block;
+      opacity: 0.7;
+      margin-bottom: 3px;
+    }
+
+    .city-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .city-button {
+      border: 1px solid rgba(43,45,66,0.12);
+      background: #fff;
+      color: var(--navy);
+      border-radius: 999px;
+      padding: 9px 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .city-button.active,
+    .city-button:hover {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+
+    .weather-status {
+      min-height: 28px;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .empty-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 35px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px dashed var(--border);
+      color: var(--muted);
+    }
+
+    @media (max-width: 850px) {
+      .weather-box {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="خدني معك">
+        <img src="assets/logo.png" alt="خدني معك - Khedni Ma'ak" class="logo">
+      </a>
+
+      <nav class="main-nav" aria-label="التنقل الرئيسي">
+        <a href="#home">الرئيسية</a>
+        <a href="#search">البحث</a>
+        <a href="#trips">الرحلات</a>
+        <a href="#weather">الطقس</a>
+        <a href="#how-it-works">كيف يعمل؟</a>
+      </nav>
+
+      <a href="#search" class="btn btn-primary nav-cta">ابدأ الآن <span>←</span></a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="orange-badge badge-hero" aria-hidden="true"></div>
+
+      <div class="container hero-content">
+        <div class="hero-copy">
+          <span class="eyebrow">خدني معك • رحلتك أسهل</span>
+          <h1>طريقك علينا.<br><strong>وخدني معك.</strong></h1>
+          <p>
+            ابحث عن رحلة تتجه إلى نفس وجهتك، تواصل مع السائق،
+            ووصل إلى مكانك بسهولة وبطريقة أكثر تعاونًا.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#search" class="btn btn-primary btn-large">ابحث عن رحلة <span>←</span></a>
+            <a href="#weather" class="btn btn-ghost btn-large">شاهد الطقس</a>
+          </div>
+
+          <div class="trust-row">
+            <div><strong>✓</strong> رحلات حسب الاتجاه</div>
+            <div><strong>✓</strong> معلومات واضحة</div>
+            <div><strong>✓</strong> بيانات طقس مباشرة</div>
+          </div>
+        </div>
+
+        <div class="hero-floating-card">
+          <div class="mini-card-head">
+            <span class="status-dot"></span>
+            <span>رحلة متاحة</span>
+          </div>
+          <div class="route-line">
+            <div>
+              <small>من</small>
+              <strong>دمر</strong>
+            </div>
+            <span class="route-arrow">←</span>
+            <div>
+              <small>إلى</small>
+              <strong>كفرسوسة</strong>
+            </div>
+          </div>
+          <div class="mini-card-meta">
+            <span>08:00 صباحًا</span>
+            <span>3 مقاعد</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SEARCH ================= -->
+    <section class="search-section" id="search">
+      <div class="container">
+        <div class="section-heading compact">
+          <span class="section-kicker">ابحث عن طريقك</span>
+          <h2>إلى أين تريد الذهاب؟</h2>
+          <p>أدخل نقطة الانطلاق والوجهة والوقت المطلوب لنجد الرحلات المناسبة.</p>
+        </div>
+
+        <form class="search-box" id="tripSearchForm">
+          <div class="field">
+            <label for="origin">من</label>
+            <input id="origin" name="origin" type="text" placeholder="مثال: دمر" required>
+          </div>
+
+          <div class="swap-icon" aria-hidden="true">↔</div>
+
+          <div class="field">
+            <label for="destination">إلى</label>
+            <input id="destination" name="destination" type="text" placeholder="مثال: كفرسوسة" required>
+          </div>
+
+          <div class="field time-field">
+            <label for="time">الوقت</label>
+            <input id="time" name="time" type="time" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary search-btn">ابحث الآن</button>
+        </form>
+
+        <div class="search-message" id="searchMessage" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ================= TRIPS ================= -->
+    <section class="trips-section" id="trips">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-kicker">رحلات متاحة</span>
+          <h2>رحلات قريبة من طريقك</h2>
+          <p>هذه البطاقات ستُنشأ من ملف <strong>drivers.json</strong> بواسطة JavaScript.</p>
+        </div>
+
+        <!-- JavaScript سيضع بطاقات الرحلات هنا -->
+        <div class="trip-grid" id="tripResults">
+          <div class="empty-results">
+            جاري تحميل الرحلات...
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WEATHER API ================= -->
+    <section class="weather-section" id="weather">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-kicker">API • معلومات مباشرة</span>
+          <h2>طقس المدن السورية</h2>
+          
+        </div>
+
+        <div class="weather-box">
+          <div class="weather-card">
+            <div class="weather-city" id="weatherCity">دمشق</div>
+            <div class="weather-temp" id="weatherTemp">--°</div>
+            <div class="weather-condition" id="weatherCondition">جاري تحميل الطقس...</div>
+
+            <div class="weather-details">
+              <div class="weather-detail">
+                <small>الرطوبة</small>
+                <strong id="weatherHumidity">--%</strong>
+              </div>
+
+              <div class="weather-detail">
+                <small>الرياح</small>
+                <strong id="weatherWind">-- كم/س</strong>
+              </div>
+
+              <div class="weather-detail">
+                <small>الإحساس</small>
+                <strong id="weatherFeels">--°</strong>
+              </div>
+
+              <div class="weather-detail">
+                <small>وقت التحديث</small>
+                <strong id="weatherUpdated">--</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="weather-info">
+            <h3>اختر مدينة</h3>
+            
+            <div class="city-buttons">
+              <button class="city-button active" data-city="damascus" aria-pressed="true">دمشق</button>
+              <button class="city-button" data-city="aleppo" aria-pressed="false">حلب</button>
+              <button class="city-button" data-city="homs" aria-pressed="false">حمص</button>
+              <button class="city-button" data-city="latakia" aria-pressed="false">اللاذقية</button>
+              <button class="city-button" data-city="tartus" aria-pressed="false">طرطوس</button>
+            </div>
+
+            <div class="weather-status" id="weatherStatus"></div>
+
+            <small>
+              مصدر البيانات:
+              <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">
+                Open-Meteo
+              </a>
+            </small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= IMAGE STORY ================= -->
+    <section class="story-section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-kicker">خدني معك</span>
+          <h2>من الناس... للناس</h2>
+          <p>هوية قريبة من الحياة اليومية، مع البصمة البرتقالية التي تظهر أينما ظهرت العلامة.</p>
+        </div>
+
+        <div class="story-grid">
+          <article class="story-card story-city">
+            <div class="orange-badge"></div>
+            <div class="story-overlay"></div>
+            <div class="story-content">
+              <span>للطريق</span>
+              <h3>لأن الوصول أسهل عندما نشارك الطريق.</h3>
+            </div>
+          </article>
+
+          <article class="story-card story-woman">
+            <div class="orange-badge"></div>
+            <div class="story-overlay"></div>
+            <div class="story-content">
+              <span>للحياة اليومية</span>
+              <h3>رحلتك اليومية أقرب مما تتوقع.</h3>
+            </div>
+          </article>
+
+          <article class="story-card story-farmer">
+            <div class="orange-badge"></div>
+            <div class="story-overlay"></div>
+            <div class="story-content">
+              <span>للمجتمع</span>
+              <h3>معلومة أدق، طريق أوضح، ووقت أقل.</h3>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="how-section" id="how-it-works">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-kicker">ببساطة</span>
+          <h2>كيف يعمل "خدني معك"؟</h2>
+        </div>
+
+        <div class="steps">
+          <article class="step">
+            <span class="step-number">01</span>
+            <div class="step-icon">⌕</div>
+            <h3>حدد وجهتك</h3>
+            <p>أدخل المكان الذي تريد الوصول إليه والوقت المناسب لك.</p>
+          </article>
+
+          <article class="step">
+            <span class="step-number">02</span>
+            <div class="step-icon">↔</div>
+            <h3>اختر الرحلة</h3>
+            <p>نطابق طلبك مع الرحلات التي تسلك نفس الاتجاه.</p>
+          </article>
+
+          <article class="step">
+            <span class="step-number">03</span>
+            <div class="step-icon">✓</div>
+            <h3>اطلب مقعدك</h3>
+            <p>راجع معلومات السائق والرحلة ثم أرسل طلبك.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BENEFITS ================= -->
+    <section class="benefits-section" id="benefits">
+      <div class="container benefits-layout">
+        <div class="benefits-copy">
+          <span class="section-kicker">لماذا خدني معك؟</span>
+          <h2>فكرة بسيطة لمشكلة يومية.</h2>
+          <p>
+            نريد أن نجعل مشاركة الرحلات أكثر وضوحًا وتنظيمًا،
+            بحيث يجد الراكب رحلة مناسبة ويستفيد السائق من المقاعد المتاحة لديه.
+          </p>
+
+          <ul class="benefit-list">
+            <li><span>✓</span><div><strong>وقت أقل</strong><small>اعثر على الرحلات التي تناسب مسارك.</small></div></li>
+            <li><span>✓</span><div><strong>معلومات أوضح</strong><small>السائق، السيارة، الوقت والمسار في بطاقة واحدة.</small></div></li>
+            <li><span>✓</span><div><strong>تجربة أقرب للناس</strong><small>تصميم بسيط وواضح دون تعقيد.</small></div></li>
+          </ul>
+        </div>
+
+        <div class="benefit-panel">
+          <div class="panel-badge"></div>
+          <p>نفس اللون..<br>نفس الرسالة..<br><strong>في كل مكان.</strong></p>
+          <span class="panel-line"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="final-cta">
+      <div class="container">
+        <div class="cta-inner">
+          <div>
+            <span class="section-kicker light">خدني معك</span>
+            <h2>جاهز تلاقي طريقك؟</h2>
+            <p>ابدأ بالبحث عن رحلة تناسب اتجاهك ووقتك.</p>
+          </div>
+          <a href="#search" class="btn btn-primary btn-large">ابدأ الآن <span>←</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <img src="assets/logo.png" alt="خدني معك" class="footer-logo">
+        <p>معلوماتك... بيدك.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#home">الرئيسية</a>
+        <a href="#search">البحث</a>
+        <a href="#trips">الرحلات</a>
+        <a href="#weather">الطقس</a>
+      </div>
+
+      <small>© 2026 Khedni Ma'ak — جميع الحقوق محفوظة</small>
+    </div>
+  </footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

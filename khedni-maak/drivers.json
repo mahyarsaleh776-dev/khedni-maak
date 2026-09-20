@@ -1,0 +1,193 @@
+[
+  {
+    "id": 1,
+    "name": "أحمد",
+    "carModel": "كيا سيراتو",
+    "rating": 4.8,
+    "points": 320,
+    "phone": "0912345678",
+    "adRevenueShare": 70,
+    "trips": [
+      {
+        "departureTime": "08:00",
+        "origin": "دمر",
+        "route": [
+          "دمر",
+          "المزة",
+          "كفرسوسة"
+        ],
+        "finalDestination": "كفرسوسة",
+        "availableSeats": 3
+      },
+      {
+        "departureTime": "14:00",
+        "origin": "كفرسوسة",
+        "route": [
+          "كفرسوسة",
+          "المزة",
+          "دمر"
+        ],
+        "finalDestination": "دمر",
+        "availableSeats": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "سامر",
+    "carModel": "هيونداي أكسنت",
+    "rating": 4.7,
+    "points": 280,
+    "phone": "0934567890",
+    "adRevenueShare": 70,
+    "trips": [
+      {
+        "departureTime": "08:15",
+        "origin": "المزة",
+        "route": [
+          "المزة",
+          "كفرسوسة",
+          "البرامكة"
+        ],
+        "finalDestination": "البرامكة",
+        "availableSeats": 2
+      },
+      {
+        "departureTime": "17:30",
+        "origin": "البرامكة",
+        "route": [
+          "البرامكة",
+          "كفرسوسة",
+          "المزة"
+        ],
+        "finalDestination": "المزة",
+        "availableSeats": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "محمد",
+    "carModel": "كيا ريو",
+    "rating": 4.6,
+    "points": 240,
+    "phone": "0945678901",
+    "adRevenueShare": 70,
+    "trips": [
+      {
+        "departureTime": "08:30",
+        "origin": "دمر",
+        "route": [
+          "دمر",
+          "المزة",
+          "البرامكة"
+        ],
+        "finalDestination": "البرامكة",
+        "availableSeats": 1
+      },
+      {
+        "departureTime": "15:00",
+        "origin": "البرامكة",
+        "route": [
+          "البرامكة",
+          "المزة",
+          "دمر"
+        ],
+        "finalDestination": "دمر",
+        "availableSeats": 2
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "خالد",
+    "carModel": "شيفروليه أفيو",
+    "rating": 4.5,
+    "points": 190,
+    "phone": "0956789012",
+    "adRevenueShare": 70,
+    "trips": [
+      {
+        "departureTime": "07:45",
+        "origin": "جرمانا",
+        "route": [
+          "جرمانا",
+          "العباسيين",
+          "البرامكة",
+          "المزة"
+        ],
+        "finalDestination": "المزة",
+        "availableSeats": 2
+      },
+      {
+        "departureTime": "16:30",
+        "origin": "المزة",
+        "route": [
+          "المزة",
+          "البرامكة",
+          "العباسيين",
+          "جرمانا"
+        ],
+        "finalDestination": "جرمانا",
+        "availableSeats": 3
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "ياسر",
+    "carModel": "تويوتا كورولا",
+    "rating": 4.9,
+    "points": 410,
+    "phone": "0987654321",
+    "adRevenueShare": 70,
+    "trips": [
+      {
+        "departureTime": "08:10",
+        "origin": "المزة",
+        "route": [
+          "المزة",
+          "كفرسوسة",
+          "البرامكة",
+          "باب توما"
+        ],
+        "finalDestination": "باب توما",
+        "availableSeats": 2
+      },
+      {
+        "departureTime": "18:00",
+        "origin": "باب توما",
+        "route": [
+          "باب توما",
+          "البرامكة",
+          "كفرسوسة",
+          "المزة"
+        ],
+        "finalDestination": "المزة",
+        "availableSeats": 2
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "رامي",
+    "carModel": "سوزوكي سويفت",
+    "rating": 4.4,
+    "points": 160,
+    "phone": "0991234567",
+    "adRevenueShare": 70,
+    "trips": [
+      {
+        "departureTime": "08:20",
+        "origin": "الميدان",
+        "route": [
+          "الميدان",
+          "البرامكة",
+          "المزة"
+        ],
+        "finalDestination": "المزة",
+        "availableSeats": 3
+      }
+    ]
+  }
+]
